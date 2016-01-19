@@ -56,7 +56,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
       post: function(newHero) {
         var promise = $http.post('https://hero-merge.herokuapp.com/'+key+'/heroes', newHero)
           .then(function(response) {
-            console.log(response);
             return response;
           })
         return promise;
@@ -92,8 +91,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
         // get hero list
         heroService.get()
           .then(function(data) {
-            console.log('hero data');
-            console.log(data);
 
             $scope.heroes = data;
             $scope.loading = false;
@@ -103,8 +100,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
 
     // create hero
     $scope.create = function(newHero) {
-      console.log('creating.....');
-      console.log(newHero);
       if ($scope.isMerge) {
         newHero.powers = $scope.merge.powers;
       }
@@ -112,17 +107,14 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
       $scope.attributes.forEach(function(attribute) {
         newHero.attributes[attribute] = parseInt(newHero.attributes[attribute]); // cast attributes as ints
       });
-      console.log(newHero);
       heroService.post(newHero)
         .then(function(response){
-          //console.log(response);
         })
       $scope.heroes.unshift(newHero);
       init();
     }
 
     $scope.addItem = function(e, key) {
-      console.log(this);
       var pluralKey = (key == 'power') ? 'powers' : 'weaknesses';
       if (this.temp[key].length <= 0) return; // nothing added
       if ((e.type == 'keypress') && (e.keyCode != 13)) return; // keypressed but not enter
@@ -133,7 +125,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
     }
 
     $scope.checkItem = function() {
-      console.log(this);
       if (this.power.length <= 0) $scope.newHero.powers.splice(this.$index, 1);
     }
 
@@ -147,7 +138,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
     }
 
     $scope.selected = function() {
-      //console.log(this.power + ' ' + this.power.indexOf($scope.merge.powers));
       return ($scope.merge.powers.indexOf(this.power) >= 0);
     }
 
@@ -156,8 +146,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
     }
 
     $scope.onDropComplete = function(hero, e, key) {
-      //console.log(hero);
-
       var concatArraysUniqueWithSort = function (thisArray, otherArray) {
         var newArray = thisArray.concat(otherArray).sort(function (a, b) {
           return a > b ? 1 : a < b ? -1 : 0;
@@ -168,7 +156,6 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
         });
       };
       $scope.merge[key] = hero;
-      console.log($scope.merge.hero1);
       if ($scope.startMerge()) {
         $scope.isMerge = true;
         $scope.newHero.powers = concatArraysUniqueWithSort($scope.merge.hero1.powers, $scope.merge.hero2.powers);
