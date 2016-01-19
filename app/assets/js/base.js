@@ -28,7 +28,7 @@ angular.module('superApp', ['ngAnimate', 'ngDraggable', 'ngDialog'])
           background += ','+heroColors[i]+' '+(percentage*i)+'%';
         }
         background += ')';
-        element.css('background-image', background);
+        element.css('background', background);
       }
     }
   }])

@@ -1,10 +1,10 @@
 # Superhero Assessment
 
 ```
-Install Node v5.4.1
+Install Node v4.2.4 or v5.4.1
 Clone repository
 Open cloned repository folder in terminal
 Run 'npm install'
-Run 'grunt'
+Run 'node app.js'
 Open 'http://localhost:3000' in your favorite browser
 ```
