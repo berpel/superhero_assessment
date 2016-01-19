@@ -1,0 +1,106 @@
+doctype
+html(ng-app='superApp')
+  head
+    base(href='/')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Superhero Assessment
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Tinos:400,400italic,700,700italic', type='text/css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', type='text/css')
+    link(rel='stylesheet', href='css/vendor.css')
+    link(rel='stylesheet', href='css/base.css')
+    link(rel='icon', type='image/x-icon', href='img/favicon.png')
+
+  body(ng-controller='main', ng-class='{open:creating}')
+    header Superhero Assessment
+    article(ng-hide='loading')
+      section.hero(ng-repeat='hero in heroes', hero-background, hero-name='hero.hero_name' ng-drag='true', ng-drag-data='hero')
+        h1 {{::hero.hero_name}}
+        .info
+          h2 {{::hero.real_name}} - {{::hero.gender}}
+          .attributes
+            h3 Attributes
+            table
+              tr(ng-repeat='(key, value) in hero.attributes')
+                td.key {{::key}}
+                td.value {{::value}}
+          .powers
+            h3 Powers
+            ul
+              li(ng-repeat='power in hero.powers track by $index') {{::power}}
+          .weaknesses
+            h3 Weaknesses
+            ul
+              li(ng-repeat='weakness in hero.weaknesses track by $index') {{::weakness}}
+
+    footer(ng-hide='loading', ng-class='{open:creating}')
+      .actions
+        section
+          h3 New Hero
+          p Create a brand new hero
+          button.button.blue(type='button', ng-click='creating=true') Create
+        section
+          h3 Merge Two Heroes
+          p Drag and drop the heroes you wish to merge
+          .zone.zone1(ng-drop='true' ng-drop-success='onDropComplete($data, $event, "hero1")', ng-class='{filled: merge.hero1}')
+            span(ng-hide='merge.hero1') 1
+            div(ng-show='merge.hero1') {{merge.hero1.hero_name}}
+          .zone.zone2(ng-drop='true' ng-drop-success='onDropComplete($data, $event, "hero2")', ng-class='{filled: merge.hero2}')
+            span(ng-hide='merge.hero2') 2
+            div(ng-show='merge.hero2') {{merge.hero2.hero_name}}
+      i.fa.fa-times(ng-show='creating == true', ng-click='cancelHero()')
+      .new-hero
+        header
+          span(ng-show='!isMerge') New Hero
+          span(ng-show='isMerge') {{merge.hero1.hero_name}} merged with {{merge.hero2.hero_name}}
+        form(ng-submit='create(newHero)')
+          .group
+            label.main Hero Name
+            input(type='text', ng-model='newHero.hero_name', required)
+          .group
+            label.main Real Name
+            input(type='text', ng-model='newHero.real_name', required)
+          .group
+            label.main Gender
+            label.radio
+              input(type='radio', ng-model='newHero.gender', value='female', name='gender', required)
+              | Female
+            label.radio
+              input(type='radio', ng-model='newHero.gender', value='male', name='gender', required)
+              | Male
+          .group
+            label.main Attributes
+            table
+              tr(ng-repeat='attribute in attributes')
+                td.key {{attribute}}
+                td.value
+                  input.attribute(ng-hide='isMerge', type='text', ng-model='newHero.attributes[attribute]', ng-required='!isMerge')
+                  label.radio(ng-show='isMerge')
+                    input(type='radio', ng-model='newHero.attributes[attribute]', value='{{merge.hero1.attributes[attribute]}}', ng-required='isMerge', name='{{attribute}}')
+                    | {{merge.hero1.attributes[attribute]}}
+                  label.radio(ng-show='isMerge')
+                    input(type='radio', ng-model='newHero.attributes[attribute]', value='{{merge.hero2.attributes[attribute]}}', ng-required='isMerge', name='{{attribute}}')
+                    | {{merge.hero2.attributes[attribute]}}
+          .group
+            label.main
+              | Powers
+              sub(ng-show='isMerge') Select a maximum of 5
+            ul
+              li(ng-repeat='power in newHero.powers track by $index')
+                input(type='text', ng-model='power', ng-blur='checkItem()', ng-readonly='isMerge', ng-click='selectPower()', ng-class='{selected: isMerge && selected()}')
+              li(ng-hide='isMerge')
+                input(type='text', ng-blur='addItem($event, "power")', ng-keypress='addItem($event, "power")', ng-model='temp.power')
+          .group
+            label.main Weaknesses
+            ul
+              li(ng-repeat='weakness in newHero.weaknesses track by $index')
+                input(type='text', ng-model='weakness', ng-blur='checkItem()', ng-readonly='isMerge')
+              li(ng-hide='isMerge')
+                input(type='text', ng-blur='addItem($event, "weakness")', ng-keypress='addItem($event, "weakness")', ng-model='temp.weakness')
+
+          .group
+            button.button.blue(type='submit') Submit
+    .loading(ng-show='loading')
+            
+    script(type="text/javascript", src="js/vendor.min.js")
+    script(type="text/javascript", src="js/base.min.js")
+

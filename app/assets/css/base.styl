@@ -1,0 +1,238 @@
+@import 'nib'
+global-reset()
+
+@font-face
+  font-family 'badaboom'
+  src url('../fonts/BADABB__.TTF')
+
+@keyframes fly
+  from
+    left 0
+    top 100%
+  to    
+    left 100%
+    top 0
+
+
+html
+  box-sizing border-box
+
+*, *:before, *:after
+  box-sizing inherit
+
+html, body
+  height 100%
+  width 100%
+
+body
+  background-attachment fixed
+  background-image url('../img/bg.jpg')
+  background-size cover
+  color #1d1d1d
+  font-family 'Tinos'
+  font-size 20px
+  position relative
+  &.open
+    overflow hidden
+
+.loading
+  animation fly 3s infinite linear
+  background-image url('../img/superman.png');
+  background-repeat no-repeat
+  position absolute
+  height 300px
+  width 300px
+  
+header
+  color #fff
+  font-family 'badaboom'
+  font-size 40px
+  padding 20px 0
+  text-align center
+  text-shadow 1px 1px #1d1d1d
+
+article
+  align-content flex-start
+  display flex
+  flex-flow row wrap
+  padding 0 20px 150px
+  
+  section.hero
+    background-color #666
+    border-radius 20px;
+    color #fff
+    cursor move
+    box-shadow 0 0 10px rgba(0,0,0,.3)
+    flex-grow 1
+    flex-basis 0
+    margin 20px
+    padding 20px
+    position relative
+    min-width 250px
+    max-width 300px
+    text-shadow 1px 1px #1d1d1d
+    transition .1s ease
+    
+    &:hover
+      box-shadow 0 0 15px rgba(0,0,0,1)
+    
+    &.dragging
+      opacity .7
+    
+    h1
+      font-size 30px
+      text-align center
+    h2
+      font-size 20px
+      font-style italic
+      text-align center
+    h3
+      font-weight 500
+      text-transform uppercase
+
+    table
+      font-family courier
+      margin-bottom 10px
+      width 100%
+      td.key
+        text-transform capitalize
+      td.value
+        text-align right
+    
+    .attributes, .powers, .weaknesses
+      margin-top 20px
+
+    ul
+      font-family courier
+      li
+        padding-right 10px;
+      
+button.button
+  border none
+  border-radius 10px
+  cursor pointer
+  display inline-block
+  font-family 'Tinos'
+  font-size 20px
+  line-height 50px
+  min-width 100px
+  padding 0 20px
+  &.blue
+    background-color rgb(37, 102, 151)
+    color #fff
+    &:hover
+      background-color #025589
+    
+footer
+  background-color rgba(255,255,255,.9)
+  bottom -100%
+  max-height 100%
+  min-height 100%
+  padding 10px 0
+  position fixed
+  text-align center
+  transition .3s ease
+  width 100%
+  &.open
+    bottom 0
+  header
+    color #1d1d1d
+    text-shadow 1px 1px #fff
+  p
+    color #666
+    font-size 14px
+    padding 5px 0
+  .actions
+    background-color rgba(255,255,255,.9)
+    height 120px
+    padding 10px 0
+    position relative
+    top -130px
+  i.fa-times
+    cursor pointer
+    font-size 30px
+    position absolute
+    right 20px
+    top 20px
+    z-index 1
+    &:hover
+      transform scale(1.5)
+  section
+    display inline-block
+    vertical-align top
+    &:first-child
+      margin-right 20px
+    
+    .button
+      width 310px
+
+    .zone
+      border 3px dotted #1d1d1d
+      border-radius 10px
+      display inline-block
+      height 50px
+      line-height 44px
+      width 150px
+      &.zone1
+        margin-right 10px
+      &.filled
+        background-color #B89412
+        border 3px solid #B89412
+      &.drag-enter
+        border-color red
+
+.new-hero
+  margin 0 auto
+  max-height 100%
+  min-height 100%
+  overflow scroll
+  position absolute
+  text-align left
+  top 0
+  width 100%
+  form
+    margin 0 auto
+    padding 20px 0 50px
+    width 300px
+    .group
+      margin-bottom 20px
+    label.main
+      display block
+      margin-bottom 5px
+    label.radio
+      font-size 14px
+      margin-right 10px
+      input
+        margin-right 5px
+    sub
+      color #666
+      font-size 14px
+      margin-left 5px
+    input[type='text']
+      font-size 16px
+      padding 8px
+      width 100%
+      &.selected {
+        border-color green
+      }
+    input.attribute[type='text']
+      width 50px
+      
+    table
+      width 100%
+      td
+        border-bottom 1px dotted #ccc
+        padding 5px 0
+        &.key
+          text-transform capitalize
+        &.value
+          text-align right
+        label.radio
+          display inline-block
+          text-align left
+          width 40px
+          input
+            vertical-align middle
+    ul
+      li
+        padding 5px 0
