@@ -8,3 +8,8 @@ Run 'npm install'
 Run 'node app.js'
 Open 'http://localhost:3000' in your favorite browser
 ```
+
+
+![alt text](http://i.imgur.com/WHZCRgY.jpg "Heroes")
+
+![alt text](http://i.imgur.com/Nobr1jZ.jpg "Create")
